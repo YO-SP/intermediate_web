@@ -15,7 +15,7 @@
     />
 
     <!-- Web App Manifest -->
-    <link rel="manifest" href="src/manifest.json" />
+    <link rel="manifest" href="./src/manifest.json" />
 
     <title>DiantaraKita - Ceritakan Harimu</title>
 
@@ -88,12 +88,12 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <!-- Script utama aplikasi -->
-    <script type="module" src="src/scripts/index.js"></script>
-
+    <script type="module" src="./src/scripts/index.js"></script>
+  
     <!-- Script tambahan untuk IndexedDB UI -->
     <script type="module">
-      import Api from 'src/scripts/data/api.js';                              
-      import { deleteAllStories } from 'src/utils/db.js';
+      import Api from "./src/scripts/data/api.js";                              
+      import { deleteAllStories } from "./src/utils/db.js";
 
       const storyContainer = document.querySelector('#storyContainer');
       const clearCacheBtn = document.querySelector('#clearCacheBtn');
