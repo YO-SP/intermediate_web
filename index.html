@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#2196f3" />
 
     <!-- Favicon -->
-    <link rel="shortcut icon" href="favicon.png" />
+    <link rel="icon" href="favicon.png" />
 
-    <!-- Leaflet (untuk peta) -->
+    <!-- Leaflet CSS -->
     <link
       rel="stylesheet"
       href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
     />
 
-    <!-- Web App Manifest -->
-    <link rel="manifest" href="./src/manifest.json" />
+    <!-- Manifest -->
+    <link rel="manifest" href="src/manifest.json" />
 
     <title>DiantaraKita - Ceritakan Harimu</title>
 
     <style>
-      /* Tombol dan tata letak tambahan */
       #clearCacheBtn {
         display: block;
         margin: 20px auto;
@@ -48,7 +47,7 @@
         border-radius: 8px;
         padding: 10px;
         margin-bottom: 10px;
-        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       }
 
       .story-item h3 {
@@ -79,40 +78,46 @@
     </header>
 
     <main id="main-content" class="main-content">
-      <!-- Container daftar cerita dan tombol hapus cache -->
       <div id="storyContainer"></div>
       <button id="clearCacheBtn">🗑 Hapus Data Lokal</button>
     </main>
 
-    <!-- Leaflet -->
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
-    <!-- Script utama aplikasi -->
-    <script type="module" src="./src/scripts/index.js"></script>
-  
-    <!-- Script tambahan untuk IndexedDB UI -->
+    <!-- Script utama -->
+    <script type="module" src="src/scripts/index.js"></script>
+
+    <!-- Script tambahan -->
     <script type="module">
-      import Api from "./src/scripts/data/api.js";                              
+      import Api from "./src/scripts/data/api.js";
       import { deleteAllStories } from "./src/utils/db.js";
 
-      const storyContainer = document.querySelector('#storyContainer');
-      const clearCacheBtn = document.querySelector('#clearCacheBtn');
+      const storyContainer = document.querySelector("#storyContainer");
+      const clearCacheBtn = document.querySelector("#clearCacheBtn");
 
       async function loadStories() {
-        const result = await Api.getStories();
-        storyContainer.innerHTML = result.listStory
-          .map(story => `
-            <div class="story-item">
-              <h3>${story.name}</h3>
-              <p>${story.description}</p>
-            </div>
-          `)
-          .join('');
+        try {
+          const result = await Api.getStories();
+          storyContainer.innerHTML = result.listStory
+            .map(
+              (story) => `
+                <div class="story-item">
+                  <h3>${story.name}</h3>
+                  <p>${story.description}</p>
+                </div>`
+            )
+            .join("");
+        } catch (err) {
+          storyContainer.innerHTML = `<p>⚠️ Gagal memuat data cerita.</p>`;
+          console.error(err);
+        }
       }
 
-      clearCacheBtn.addEventListener('click', async () => {
+      clearCacheBtn.addEventListener("click", async () => {
         await deleteAllStories();
-        storyContainer.innerHTML = '<p>✅ Semua data lokal telah dihapus dari IndexedDB.</p>';
+        storyContainer.innerHTML =
+          "<p>✅ Semua data lokal telah dihapus dari IndexedDB.</p>";
       });
 
       loadStories();
