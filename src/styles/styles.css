@@ -1,0 +1,259 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #fff;
+  color: #333;
+  min-height: 100vh;
+}
+
+.container {
+  padding-inline: 32px;
+  margin-inline: auto;
+  max-width: 1200px;
+}
+
+header {
+  background-color: #2575fc;
+  color: white;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 70px;
+  padding: 0 24px;
+}
+
+.brand-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: white;
+}
+
+.drawer-button {
+  background: transparent;
+  border: none;
+  color: white;
+  font-size: 28px;
+  cursor: pointer;
+  display: none;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav-list a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+.nav-list a:hover {
+  opacity: 0.8;
+}
+
+.home-page {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.home-page h2 {
+  margin-bottom: 1rem;
+  color: #2575fc;
+  font-weight: 600;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background: #fafafa;
+  border: 1px solid #eee;
+  padding: 1.5rem;
+  border-radius: 10px;
+}
+
+input[type="text"],
+input[type="file"],
+input[type="number"],
+input[type="email"],
+input[type="password"] {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+  border-color: #2575fc;
+  box-shadow: 0 0 0 3px rgba(37, 117, 252, 0.15);
+  outline: none;
+}
+
+button {
+  background-color: #2575fc;
+  color: white;
+  border: none;
+  padding: 0.75rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background-color: #1d5ed6;
+}
+
+#storiesContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+#storiesContainer article {
+  background: #fafafa;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+#storiesContainer img {
+  width: 100%;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+}
+
+#map {
+  border-radius: 10px;
+  overflow: hidden;
+  margin-top: 1rem;
+  min-height: 300px;
+}
+
+.auth-container {
+  min-height: calc(100vh - 90px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.auth-container section {
+  background: #fafafa;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.1);
+  max-width: 400px;
+  width: 100%;
+}
+
+.auth-container h2 {
+  color: #2575fc;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.about-page {
+  max-width: 800px;
+  margin: 3rem auto;
+  line-height: 1.6;
+  padding: 0 1rem;
+}
+
+.about-page h1 {
+  color: #2575fc;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+}
+
+@media (max-width: 375px) {
+  .main-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+  }
+
+  .nav-list {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .home-page {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  form {
+    padding: 1rem;
+  }
+
+  input, button {
+    font-size: 0.9rem;
+  }
+
+  #map {
+    min-height: 250px;
+  }
+
+  .auth-container section {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-page {
+    grid-template-columns: 1fr;
+    padding: 1.5rem;
+  }
+
+  #storiesContainer {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  .nav-list {
+    display: none;
+  }
+
+  .drawer-button {
+    display: block;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-page {
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+  }
+
+  .container {
+    max-width: 1200px;
+  }
+
+  #map {
+    min-height: 400px;
+  }
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: ease-in-out;
+}

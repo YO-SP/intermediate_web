@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#2196f3" />
+
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="favicon.png" />
+
+    <!-- Leaflet (untuk peta) -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+
+    <!-- Web App Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <title>DiantaraKita - Ceritakan Harimu</title>
+
+    <style>
+      /* Tombol dan tata letak tambahan */
+      #clearCacheBtn {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 15px;
+        background: #f44336;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 15px;
+      }
+
+      #clearCacheBtn:hover {
+        background: #d32f2f;
+      }
+
+      #storyContainer {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 10px;
+      }
+
+      .story-item {
+        background: #f5f5f5;
+        border-radius: 8px;
+        padding: 10px;
+        margin-bottom: 10px;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      }
+
+      .story-item h3 {
+        margin: 0;
+        color: #2196f3;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="main-header container">
+        <a class="brand-name" href="#/">DiantaraKita</a>
+
+        <nav id="navigation-drawer" class="navigation-drawer">
+          <ul id="nav-list" class="nav-list">
+            <li><a href="#/">Beranda</a></li>
+            <li><a href="#/about">About</a></li>
+            <li><a href="#/add-story">Add Story</a></li>
+            <li><a href="#/login">Login</a></li>
+            <li><a href="#/register">Register</a></li>
+            <li><a href="#/logout">Logout</a></li>
+          </ul>
+        </nav>
+
+        <button id="drawer-button" class="drawer-button">☰</button>
+      </div>
+    </header>
+
+    <main id="main-content" class="main-content">
+      <!-- Container daftar cerita dan tombol hapus cache -->
+      <div id="storyContainer"></div>
+      <button id="clearCacheBtn">🗑 Hapus Data Lokal</button>
+    </main>
+
+    <!-- Leaflet -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <!-- Script utama aplikasi -->
+    <script type="module" src="./scripts/index.js"></script>
+
+    <!-- Script tambahan untuk IndexedDB UI -->
+    <script type="module">
+      import Api from './scripts/data/api.js';
+      import { deleteAllStories } from './scripts/utils/db.js';
+
+      const storyContainer = document.querySelector('#storyContainer');
+      const clearCacheBtn = document.querySelector('#clearCacheBtn');
+
+      async function loadStories() {
+        const result = await Api.getStories();
+        storyContainer.innerHTML = result.listStory
+          .map(story => `
+            <div class="story-item">
+              <h3>${story.name}</h3>
+              <p>${story.description}</p>
+            </div>
+          `)
+          .join('');
+      }
+
+      clearCacheBtn.addEventListener('click', async () => {
+        await deleteAllStories();
+        storyContainer.innerHTML = '<p>✅ Semua data lokal telah dihapus dari IndexedDB.</p>';
+      });
+
+      loadStories();
+    </script>
+  </body>
+</html>
