@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', async () => {
 if ('serviceWorker' in navigator && 'Notification' in window) {
   window.addEventListener('load', async () => {
     try {
-      const registration = await navigator.serviceWorker.register('/sw.js');
+      const swPath = `${window.location.pathname.replace(/\/$/, '')}/sw.js`.replace(/\/\//g, '/');
+      const registration = await navigator.serviceWorker.register(swPath);
       console.log('Service Worker registered:', registration);
 
       const permission = await Notification.requestPermission();
@@ -42,19 +43,6 @@ if ('serviceWorker' in navigator && 'Notification' in window) {
     } catch (error) {
       console.error('Gagal registrasi service worker:', error);
     }
-  });
-}
-
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker
-      .register('/sw.js')
-      .then((registration) => {
-        console.log('✅ Service Worker registered:', registration.scope);
-      })
-      .catch((error) => {
-        console.error('❌ Service Worker registration failed:', error);
-      });
   });
 }
 

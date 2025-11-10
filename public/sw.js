@@ -1,11 +1,19 @@
 const CACHE_NAME = 'my-app-cache-v1';
+
+// Get the base path from the service worker's location
+const getBasePath = () => {
+  const swPath = self.location.pathname;
+  return swPath.substring(0, swPath.lastIndexOf('/'));
+};
+
+const basePath = getBasePath();
+
 const urlsToCache = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/public/images/logo.png',
-  '/public/favicon.png'
-];
+  `${basePath}/`,
+  `${basePath}/index.html`,
+  `${basePath}/manifest.json`,
+  `${basePath}/favicon.png`
+].map(url => url.replace(/\/\//g, '/'));
 
 self.addEventListener('install', (event) => {
   console.log('Service Worker: Installing...');
@@ -46,8 +54,8 @@ self.addEventListener('push', (event) => {
   const data = event.data ? event.data.text() : 'Push message tanpa data.';
   const options = {
     body: data,
-    icon: '/icons/icon-192x192.png',
-    badge: '/icons/icon-192x192.png',
+    icon: `${basePath}/icons/icon-192x192.png`,
+    badge: `${basePath}/icons/icon-192x192.png`,
   };
   event.waitUntil(
     self.registration.showNotification('Notifikasi dari Aplikasi!', options)
