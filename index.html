@@ -15,7 +15,7 @@
     />
 
     <!-- Web App Manifest -->
-    <link rel="manifest" href="/manifest.json" />
+    <link rel="manifest" href="src/manifest.json" />
 
     <title>DiantaraKita - Ceritakan Harimu</title>
 
@@ -92,8 +92,8 @@
 
     <!-- Script tambahan untuk IndexedDB UI -->
     <script type="module">
-      import Api from './scripts/data/api.js';
-      import { deleteAllStories } from './scripts/utils/db.js';
+      import Api from 'src/scripts/data/api.js';                              
+      import { deleteAllStories } from 'src/utils/db.js';
 
       const storyContainer = document.querySelector('#storyContainer');
       const clearCacheBtn = document.querySelector('#clearCacheBtn');
