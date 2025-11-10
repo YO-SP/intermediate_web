@@ -10,7 +10,7 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true, // otomatis bersihkan dist sebelum build baru
-    publicPath: process.env.PUBLIC_PATH || '/',
+    publicPath: '',
   },
   module: {
     rules: [

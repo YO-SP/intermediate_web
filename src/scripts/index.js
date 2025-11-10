@@ -1,5 +1,7 @@
 import '../styles/styles.css';
 import App from './pages/app';
+import Api from './data/api.js';
+import { deleteAllStories } from '../utils/db.js';
 
 document.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('authToken');
@@ -23,6 +25,18 @@ document.addEventListener('DOMContentLoaded', async () => {
   window.addEventListener('hashchange', async () => {
     await app.renderPage();
   });
+
+  // Setup clear cache button functionality
+  const clearCacheBtn = document.querySelector('#clearCacheBtn');
+  if (clearCacheBtn) {
+    clearCacheBtn.addEventListener('click', async () => {
+      await deleteAllStories();
+      const storyContainer = document.querySelector('#storyContainer');
+      if (storyContainer) {
+        storyContainer.innerHTML = '<p>✅ Semua data lokal telah dihapus dari IndexedDB.</p>';
+      }
+    });
+  }
 });
 
 if ('serviceWorker' in navigator && 'Notification' in window) {
